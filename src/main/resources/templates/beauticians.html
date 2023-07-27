@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+    <title>Beauticians list</title>
+    <head th:insert="~{fragments/links.html :: links}"></head>
+    <link rel="stylesheet" href="/homeStyle.css">
+    <link rel="stylesheet" href="/beauticiansStyle.css">
+
+</head>
+<body>
+<!--<header th:insert="~{fragments/navbar.html :: nav}"></header>-->
+<header th:insert="~{fragments/navLoged.html :: navLoged}"></header>
+
+<div class="container">
+    <div th:each="beautician: ${beauticians}" class="slide-content">
+        <div class="card row ">
+            <div class="img-content">
+                <span class="overlay"></span>
+                <div class="card-image">
+                    <img th:src="@{${'/profilePictures/' + beautician.getId() +'.jpg'}}" alt="" class="card-img"/>
+                </div>
+            </div>
+            <div class="card-content">
+                <p th:text="${beautician.fullName}" class="name"></p>
+                <p  th:text="${beautician.getShortAboutMe()}"></p>
+                <a  type="submit" class="btn-view mt-3 mb-5" th:href="@{/beauticians/{id}(id=${beautician.id})}">See more</a>
+        </div>
+    </div>
+</div>
+
+
+<!--
+<div class="beauty-list">
+    <div th:each="beautician: ${beauticians}">
+        <div>
+            <p th:text="${beautician.fullName}"></p>
+            <p th:text="${beautician.aboutMe}"></p>
+        </div>
+        <button class="btn-view">
+            <a th:href="@{/beauticians/{id}(id=${beautician.id})}">See more</a>
+        </button>
+    </div>
+-->
+
+
+</div>
+</body>
+</html>

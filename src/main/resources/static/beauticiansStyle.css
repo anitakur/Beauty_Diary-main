@@ -1,0 +1,116 @@
+* {
+    margin: 0;
+    paddind: 0;
+    box-sizing: border-box;
+    color: #5b5b5b;
+    /* font-family: "Roboto Light";*/
+    font-family: 'Roboto', sans-serif;
+
+}
+
+.slide-content {
+    display: inline-flex;
+    margin-top: 100px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.card {
+    width: 350px;
+    border-radius: 25px;
+    box-shadow: 10px 10px 20px #dadce0;
+}
+
+
+.img-content,
+.card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px 30px;
+    height: 250px;
+}
+
+.img-content {
+    position: relative;
+    row-gap: 5px;
+    padding: 25px 0;
+}
+
+.overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #6d6efc;
+    border-radius: 25px 25px 0 25px;
+}
+
+.overlay::before,
+.overlay::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: -40px;
+    height: 40px;
+    width: 40px;
+    background-color: #6d6efc;
+}
+
+.overlay::after {
+    border-radius: 0 25px 0 0;
+    background-color: white;
+}
+
+.card-image {
+    position: relative;
+    height: 180px;
+    width: 180px;
+    border-radius: 50%;
+    background-color: white;
+}
+
+.card-img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 5px solid #ffc801;
+}
+
+.name {
+    font-size: 23px;
+    font-weight: normal;
+    color: #2d2d2d;
+}
+
+.beauty-list {
+    margin-left: 100px;
+}
+
+.btn-view {
+    background-color: #6d6efc;
+    padding: 10px 35px;
+    text-decoration: none;
+    border: none;
+    color: white;
+    font-size: 18px;
+    font-weight: normal;
+    border-radius: 18px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+.btn-view:hover{
+    background: white;
+    border: 1px solid;
+    color: #712cf9;
+}
+
+.btn-view a {
+    text-decoration: none;
+    color: white;
+}
+
+
+

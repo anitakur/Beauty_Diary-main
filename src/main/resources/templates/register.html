@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up</title>
+    <head th:insert="~{fragments/links.html :: links}"></head>
+    <link rel="stylesheet" href="register.css">
+</head>
+<body>
+    <div class="container">
+        <div class="img">
+            <img class="rounded mx-auto d-block" src="/img/signUp.png" width="280px" height="280px">
+        </div>
+        <div  class="text-centre">
+            <p class="text-center">Sign Up</p>
+        </div>
+        <form  th:action="@{/register}" method="post" th:object="${user}">
+            <div id="ms" th:if="${#fields.hasAnyErrors()}">
+                <ul>
+                    <li th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+                </ul>
+            </div>
+            <div class="mb-3 ">
+                <input name="fullName" class="form-control" placeholder="Full name" required autocomplete="false" th:value="${user?.getFullName()}">
+            </div>
+            <div class="mb-3">
+                <input name="email" class="form-control" placeholder="Email address" required autocomplete="false" th:value="${user?.getEmail()}">
+            </div>
+            <div class="mb-3">
+                <input name="phoneNumber" class="form-control" placeholder="Phone number" required autocomplete="false" th:value="${user?.getPhoneNumber()}">
+            </div>
+            <div class="mb-3">
+                <input name="password" type="password" class="form-control" placeholder="Password" required autocomplete="false" th:value="${user?.getPassword()}">
+            </div>
+            <div id="radio" class="mb-3 form-check">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="userType" id="Customer" value="customer">
+                    <label class="form-check-label" for="Customer">
+                        Customer
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="userType" id="Beautician"  value="beautician" checked>
+                    <label class="form-check-label" for="Beautician">
+                        Beauty master
+                    </label>
+                </div>
+            </div>
+            <button type="submit" class="btn d-grid gap-2 col-6 mx-auto">Submit</button>
+        </form>
+    </div>
+
+<!--<form action="/register" th:action="@{/register}" method="post">
+
+    <div>
+        <label>Full Name</label>
+        <input type="text" name="fullName" title="Enter your Name and Surname" th:value="${user?.getFullName()}">
+    </div>
+    <div>
+        <label>E-mail</label>
+        <input type="email" name="email" pattern="^\S+@\S+\.\S+$" title="example@mail.com"
+               th:value="${user?.getEmail()}">
+    </div>
+    <div>
+        <label>Phone number</label>
+        <input type="text" name="phoneNumber" title="Enter your phone number, example=26000000"
+               th:value="${user?.getPhoneNumber()}">
+    </div>
+    <div>
+        <label>Password</label>
+        <input type="password" name="password" title="Enter your password" th:value="${user?.getPassword()}">
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="userType" id="Customer" value="customer">
+        <label class="form-check-label" for="Customer">
+            Customer
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="userType" id="Beautician" value="beautician" checked>
+        <label class="form-check-label" for="Beautician">
+            Beautician
+        </label>
+        <div>
+            <button>Create account</button>
+        </div>
+        <div>
+            <p th:if="${message}">
+           <span th:if="${ message == 'signup_failed'}">
+               <label th:if="${error}" th:text="${(error)}"></label>
+           </span>
+            </p>
+        </div>
+
+    </div>
+</form>-->
+</body>
+</html>

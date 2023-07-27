@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+    <title>Reservation-result</title>
+    <head th:insert="~{fragments/links.html :: links}"></head>
+    <link rel="stylesheet" href="/reservationResult.css">
+</head>
+<body>
+<!--Align center-->
+<div class="container min-vh-100 d-flex justify-content-center align-items-center">
+    <div class="box">
+        <img class="rounded mx-auto d-block" src="/img/done.png" width="300px" height="300px">
+        <h4> You successfully signed up for a visit!</h4>
+        <p th:text="'Beauty master name: ' + ${reservation.beautician.fullName}"></p>
+        <p th:text="'Date of visit: ' + ${reservation.date}"></p>
+        <p th:text="'Time of visit: ' + ${reservation.time}"></p>
+       <div class="d-grid gap-2 col-4 mx-auto">
+           <a type="submit" class="btn" th:href="@{/beauticians/{id}(id=${reservation.beautician.id})}">Return</a>
+       </div>
+    </div>
+</div>
+</body>
+</html>

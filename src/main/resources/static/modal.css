@@ -1,0 +1,15 @@
+
+#btn-modal,#btn-modal-submit {
+    background-color: #eb9938;
+    padding: 10px 35px;
+    text-decoration: none;
+    border: none;
+    color: white;
+    font-size: 18px;
+    font-weight: normal;
+    border-radius: 18px;
+}
+#btn-modal:hover,#btn-modal-submit:hover { background: white;
+    border: 1px solid;
+    color: #eb9938;
+}

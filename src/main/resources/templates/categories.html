@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+    <title>Categories</title>
+    <head th:insert="~{fragments/links.html :: links}"></head>
+    <link rel="stylesheet" href="/homeStyle.css">
+    <link rel="stylesheet" href="/categories.css">
+</head>
+<body>
+<div>
+  <!--  <header th:insert="~{fragments/navbar.html :: nav}"></header>-->
+    <header th:insert="~{fragments/navLoged.html :: navLoged}"></header>
+</div>
+
+<div class="container text-center">
+    <div class="row">
+        <div class="col-4">
+            <div class="profiles">
+                <div class="profile1">
+                    <img src="/img/hair.jpg" class="profile1-img"/>
+                    <h3 class="category">Hair Care</h3>
+                    <a type="submit" class="btn1 mt-3 mb-5" href="/categories/1/beauticians">See more</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="profiles">
+                <div class="profile1">
+                    <img src="/img/skin.jpg" class="profile1-img"/>
+                    <h3 class="category">Skin Care</h3>
+                    <a type="submit" class="btn1 mt-3 mb-5" href="/categories/2/beauticians">See more</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="profiles">
+                <div class="profile1">
+                    <img src="/img/nails.jpg" class="profile1-img"/>
+                    <h3 class="category">Nail Care</h3>
+                    <a type="submit" class="btn1 mt-3 mb-5" href="/categories/3/beauticians">See more</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--<div>
+    <ul>
+        <li th:each="category: ${categories}">
+            <a th:href="@{/categories/{categoryId}/beauticians(categoryId=${category.id})}">
+                <th:block th:text="${category.name}"></th:block>
+            </a>
+        </li>
+    </ul>
+</div>-->
+
+</body>
+</html>

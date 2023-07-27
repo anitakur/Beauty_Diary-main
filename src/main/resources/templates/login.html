@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign In</title>
+    <head th:insert="~{fragments/links.html :: links}"></head>
+       <link rel="stylesheet" href="login.css">
+</head>
+<body>
+<div class="container">
+    <div class="img">
+        <img class="rounded mx-auto d-block" src="/img/signin.png" width="280px" height="280px">
+    </div>
+    <div  class="text-centre">
+        <p class="text-center">Sign In</p>
+    </div>
+    <form action="/login" method="post">
+        <div class="mb-3">
+            <input name="email" class="form-control" placeholder="Email address" required autocomplete="false">
+        </div>
+        <div class="mb-3">
+            <input name="password" type="password" class="form-control" placeholder="Password" required autocomplete="false" th:value="${user?.getPassword()}">
+        </div>
+        <button type="submit" class="btn d-grid gap-2 col-6 mx-auto">Submit</button>
+        <div>
+            <p>
+                <!--<span th:if="${message == 'signup_success'}">
+                        Welcome to the Beautiful World!</span>-->
+                <span th:if="${message == 'login_failed'}">
+                        Unless, you enter your e-mail or password wrong:( Let`s try again!
+                    </span>
+            </p>
+        </div>
+    </form>
+</div>
+<!--<main>
+    <h1>Sign In</h1>
+    <div>
+        <form action="/login" method="post">
+            <div>
+                <label>Enter your E-mail address</label>
+                <input type="email" name="email" required>
+            </div>
+            <div>
+                <label>Enter your Password</label>
+                <input type="password" name="password" required>
+            </div>
+            <div>
+                <button>Sign In</button>
+            </div>
+            <div>
+                <p>
+                    <span th:if="${message == 'signup_success'}">
+                        Welcome to the Beautiful World!</span>
+                    <span th:if="${message == 'login_failed'}">
+                        Unless, you enter your e-mail or password wrong:( Let`s try again!
+                    </span>
+                </p>
+            </div>
+        </form>
+    </div>
+</main>-->
+</body>
+</html>

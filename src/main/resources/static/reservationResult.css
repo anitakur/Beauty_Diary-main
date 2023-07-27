@@ -1,0 +1,36 @@
+body{
+    background-color: #f6f6f6;
+}
+.box{
+    width: 500px;
+    height: 600px;
+}
+h4{
+    text-align: center;
+
+    font-weight: bold;
+}
+p{
+    margin-top: 20px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: normal;
+}
+
+a.btn{
+    border: none;
+    outline: none;
+    color:white;
+    border-radius:18px;
+    background-color: #6d6efc;
+    padding: 10px 35px;
+    font-size: 18px;
+    text-decoration: none;
+    margin-top: 15px;
+
+}
+a.btn:hover{
+    background: white;
+    border: 1px solid;
+    color: #712cf9;
+}

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reservations List</title>
+    <head th:insert="~{fragments/links.html :: links}"></head>
+    <link rel="stylesheet" href="/homeStyle.css">
+    <link rel="stylesheet" href="/reservationList.css">
+</head>
+<body>
+<!--<header th:insert="~{fragments/navbar.html :: nav}"></header>-->
+<header th:insert="~{fragments/navLoged.html :: navLoged}"></header>
+<div class="container">
+    <table class="table">
+        <thead class="thead">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Full name</th>
+            <th scope="col">Date</th>
+            <th scope="col">Time</th>
+            <th scope="col">Phone number</th>
+            <th scope="col">Description</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr scope="row" th:each="reservation,iterator: ${reservations}">
+            <td th:text="${iterator.index}+1"></td>
+            <td th:text="${reservation.name}"></td>
+            <td th:text="${reservation.date}"></td>
+            <td th:text="${reservation.time}"></td>
+            <td th:text="${reservation.phoneNumber}"></td>
+            <td th:text="${reservation.description}"></td>
+            <td><a type="submit" class="btn"
+                   th:href="@{/beautician/{beauticianId}/deleteReservation/{id}(id=${reservation.id},beauticianId=${reservation.beautician.id})}">Cancel</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div >
+        <a type="submit" class="btn" th:href="@{/master-account/{beauticianId}(beauticianId=${beauticianId})}">Return</a>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,55 @@
+
+body{
+    color: #5b5b5b;
+    /*font-family: "Roboto Light";*/
+    font-family: 'Roboto', sans-serif;
+    background-color: #fafafa;
+}
+
+.profile1-img{
+    height: 250px;
+    width: 250px;
+    margin: 20px;
+
+}
+h3{
+    margin-top: 20px;
+    font-weight: lighter;
+    font-size: 30px;
+    color: #5b5b5b;
+}
+
+.profiles{
+    border:solid #dadce0 1px;
+    border-radius: 20px;
+    box-shadow: 12px 12px 22px #dadce0;
+    margin: 70px 25px 25px;
+    background-color: white;
+}
+
+.btn1{
+    border: none;
+    outline: none;
+    color:white;
+    border-radius:18px;
+    background-color: #6d6efc;
+    padding: 10px 35px;
+    font-size: 18px;
+    text-decoration: none;
+}
+.btn1:hover{
+    background: white;
+    border: 1px solid;
+    color: #712cf9;
+}
+
+
+
+
+
+
+
+
+
+
+

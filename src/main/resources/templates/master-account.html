@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <head th:insert="~{fragments/links.html :: links}"></head>
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <link rel="stylesheet" href="/masterProfile.css">
+</head>
+<body>
+<!--<header th:insert="~{fragments/navbar.html :: nav}"></header>-->
+<header th:insert="~{fragments/navLoged.html :: navLoged}"></header>
+
+<div class="container">
+    <div class="row">
+        <!-- Profile photo,reservation list-->
+        <div class="col-4">
+            <div class="avatar">
+                <img id="avatar" th:src="@{${'/profilePictures/' + beauticianId +'.jpg'}}" class="mx-auto d-block"
+                     alt="">
+                <!-- Button trigger modal -->
+                <button id="edit-img" type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <i class='far fa-edit' style='font-size:24px'></i>
+                </button>
+            </div>
+            <!-- Modal for uploading profile img-->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Edit profile photo</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <!--     Upload form -->
+                            <form method="post" enctype="multipart/form-data"
+                                  th:action="@{/master-account/{beauticianId}/uploadImage(beauticianId=${beauticianId})}">
+                                <div class="row g-3 align-items-center">
+                                    <input type="file" name="imageFile" accept="image/*" class="form-control">
+                                </div>
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                    <button id="add-img" type="submit" class="btn me-md-2">Add photo</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center">
+                <h3 th:text="${be.getFullName()}"></h3>
+                <p id="capture">Personal account</p>
+            </div>
+            <div>
+                <a id="list" type="submit" class="btn btn-primary d-grid gap-2 col-6 mx-auto"
+                   th:href="@{/reservations-list/{beauticianId}(beauticianId=${item.beautician.id})}"> My
+                    Reservations</a>
+            </div>
+            <!-- Edit profile section-->
+            <div>
+                <p>
+                    <a class="btn d-grid gap-2 col-6 mx-auto" data-bs-toggle="collapse"
+                       href="#collapseExample" role="button"
+                       aria-expanded="false" aria-controls="collapseExample">
+                        Edit profile
+                    </a>
+                </p>
+            </div>
+
+            <div class="collapse" id="collapseExample">
+                <div class="card card-body">
+                    <form th:action="@{/master-account/{beauticianId}/updateProfile(beauticianId=${be.id})}"
+                          th:object="${be}" method="post">
+                        <div class="mb-3">
+                            <label class="form-label">Address</label>
+                            <input th:field="*{address}" type="text" name="address" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Phone number</label>
+                            <input th:field="*{phoneNumber}" type="text" name="phoneNumber" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">About me</label>
+                            <textarea th:field="*{aboutMe}" class="form-control" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Choose Service Category</label>
+                            <select class="form-select" aria-label="Default select example" th:field="*{category.id}">
+                                <option th:each="category: ${categories}" th:value="${category.id}">
+                                    <th:block th:text="${category.name}"/>
+                                </option>
+                            </select>
+                        </div>
+                        <input hidden="hidden" th:field="*{id}"/>
+                        <input hidden="hidden" th:field="*{email}"/>
+                        <input hidden="hidden" th:field="*{fullName}"/>
+                        <input hidden="hidden" th:field="*{password}"/>
+                        <input hidden="hidden" th:field="*{createdAt}"/>
+                        <div>
+                            <button class="btn d-grid gap-2 col-6 mx-auto">Submit</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation tab section-->
+        <div class="col-8">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="home-tab" data-bs-toggle="tab"
+                            data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane">
+                        View Profile
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="price-list-tab" data-bs-toggle="tab"
+                            data-bs-target="#price-list-tab-pane"
+                            type="button" role="tab" aria-controls="price-list-tab-pane" aria-selected="false">Edit
+                        Price
+                        List
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane"
+                            type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false"> Edit
+                        Portfolio
+                    </button>
+                </li>
+            </ul>
+
+            <!--   Content-->
+            <div class="tab-content fade show active" id="myTabContent">
+                <div class="tab-pane fade" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab"
+                     tabindex="0">
+                    <div>
+                        <h5>About me:</h5>
+                        <p th:text="${item.beautician.aboutMe}"></p>
+                    </div>
+                    <div>
+                        <h5>Address:</h5>
+                        <p th:text="${item.beautician.address}"></p>
+                    </div>
+                    <div>
+                        <h5>Email:</h5>
+                        <p th:text="${item.beautician.email}"></p>
+                    </div>
+                    <div>
+                        <h5>Phone number:</h5>
+                        <p th:text="${item.beautician.phoneNumber}"></p>
+                    </div>
+
+                </div>
+
+                <!--     Price list-->
+                <div class="tab-pane" id="price-list-tab-pane" data-toggle="tab" role="tabpanel"
+                     aria-labelledby="price-list-tab"
+                     tabindex="0">
+                    <form th:action="@{/master-account/{beauticianId}/addPriceList(beauticianId=${item.beautician.id})}"
+                          th:object="${item}" method="post"
+                          class="row g-3 align-items-center">
+                        <div class="col-4">
+                            <label class="visually-hidden">Name</label>
+                            <div class="input-group">
+                                <input th:field="*{name}" name="name" type="input" class="form-control"
+                                       placeholder="Name">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <label class="visually-hidden">Price</label>
+                            <div class="input-group">
+                                <input th:field="*{price}" name="price" type="input" class="form-control"
+                                       placeholder="Price">
+                            </div>
+                            <input hidden="hidden" th:field="*{beautician}"/>
+                        </div>
+                        <div class="col-4">
+                            <button type="submit" class="btn">Add new</button>
+                        </div>
+                    </form>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Service name</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr scope="row" th:each="item, it : ${itemList}">
+                            <td th:text="${it.index + 1}"></td>
+                            <td th:text="${item.name}"></td>
+                            <td th:text="${item.price}"></td>
+                            <td>
+                                <a th:href="@{/master-account/{beauticianId}/deletePriceListItem/{id}(id=${item.id},beauticianId=${item.beautician.id})}"
+                                   type="submit" class="btn-delete">Delete</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!--  Portfolio-->
+                <div class="tab-pane" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab"
+                     tabindex="0">
+                    <!-- Upload form -->
+                    <form method="post" enctype="multipart/form-data"
+                          th:action="@{/master-account/{beauticianId}/uploadPhoto(beauticianId=${beauticianId})}">
+                        <div class="row g-3 align-items-center">
+                            <input type="file" name="file" accept="image/*" class="form-control">
+                        </div>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="submit" class="btn me-md-2">Add photo</button>
+                        </div>
+                    </form>
+                    <div>
+                        <div class="row">
+                            <div class="column" th:each="photo: ${photoList}" th:value="${photo.id}">
+                                <img th:src="@{${'data:image/jpeg;base64,' + photo.getBase64Data()}}">
+                                <div class="text-block">
+                                    <a th:href="@{/master-account/{beauticianId}/deletePhoto/{id}(id=${photo.id},beauticianId=${photo.beautician.id})}">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function activatePriceListab() {
+        console.log("activating tab");
+        var triggerEl = document.querySelector('#price-list-tab')
+        var tab = new bootstrap.Tab(triggerEl);
+        tab.show();
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        activatePriceListab();
+    });
+</script>
+</body>
+</html>

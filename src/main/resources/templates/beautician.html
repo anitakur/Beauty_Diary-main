@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+    <title>Beautician</title>
+    <head th:insert="~{fragments/links.html :: links}"></head>
+    <link rel="stylesheet" href="/modal.css">
+    <link rel="stylesheet" href="/masterProfile.css">
+<body>
+<!--<header th:insert="~{fragments/navbar.html :: nav}"></header>-->
+<header th:insert="~{fragments/navLoged.html :: navLoged}"></header>
+<div class="container">
+    <div class="row">
+        <!-- Profile photo,signUp for visit form-->
+        <div class="col-4">
+            <div>
+                <img id="avatar" th:src="@{${'/profilePictures/' + beautician.getId() +'.jpg'}}" class="mx-auto d-block"
+                     alt="You photo...">
+            </div>
+            <div>
+                <div class="text-center" th:action="@{/beautician}" th:object="${beautician}" method="get">
+                    <h3 th:text="${beautician.fullName}"></h3>
+                </div>
+
+                <!--Button trigger modal-->
+                <button th:if="${loggedInUserType == 'customer'}" id="btn-modal" type="button"
+                        class="btn btn-primary d-grid gap-2 col-6 mx-auto" data-bs-toggle="modal"
+                        data-bs-target="#visitModal">
+                    SignUp for visit
+                </button>
+                <!-- Modal -->
+                <div class="modal fade" id="visitModal" tabindex="-1" aria-labelledby="visitModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Sign up for visit</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form th:action="@{/reservation}" th:object="${reservation}" method="post">
+                                    <div class="mb-3">
+                                        <div>
+                                            <lable class="form-label">Full Name</lable>
+                                            <input class="form-control" type="text" th:field="*{name}" required>
+                                        </div>
+                                        <div>
+                                            <lable class="form-label">Description</lable>
+                                            <input class="form-control" type="text" th:field="*{description}" required>
+                                        </div>
+                                        <div>
+                                            <lable class="form-label">Phone Number</lable>
+                                            <input class="form-control" type="text" th:field="*{phoneNumber}" required>
+                                        </div>
+                                        <div>
+                                            <lable class="form-label">Date</lable>
+                                            <input class="form-control" type="date" th:field="*{date}" required>
+                                        </div>
+                                        <div>
+                                            <lable class="form-label" name=>Time</lable>
+                                            <select class="form-select" required th:field="*{time}">
+                                                <option th:each="t:*{times}" th:value="${t}" aria-label="Time">
+                                                    <th:block th:text="${t}"/>
+                                                </option>
+                                            </select>
+                                            <input hidden="hidden" th:field="*{beautician}"/>
+
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <!-- <button id="btn-modal-close" type="button" class="btn btn-secondary"
+                                                 data-bs-dismiss="modal">Close
+                                         </button>-->
+                                        <input id="btn-modal-submit" type="submit" class="btn btn-primary"/>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation tab-->
+        <div class="col-8">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="home-tab" data-bs-toggle="tab"
+                            data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane">
+                        Information
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="price-list-tab" data-bs-toggle="tab"
+                            data-bs-target="#price-list-tab-pane"
+                            type="button" role="tab" aria-controls="price-list-tab-pane" aria-selected="false">
+                        Price
+                        List
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="contact-tab" data-bs-toggle="tab"
+                            data-bs-target="#contact-tab-pane"
+                            type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">
+                        Portfolio
+                    </button>
+                </li>
+            </ul>
+            <!-- Nav tab Content-->
+            <div class="tab-content fade show active" id="myTabContent">
+                <div class="tab-pane fade" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab"
+                     tabindex="0">
+                    <div>
+                        <h5>About me:</h5>
+                        <p th:text="${beautician.aboutMe}"></p>
+                    </div>
+                    <div>
+                        <h5>Address:</h5>
+                        <p th:text="${beautician.address}"></p>
+                    </div>
+                    <div>
+                        <h5>Email:</h5>
+                        <p th:text="${beautician.email}"></p>
+                    </div>
+                    <div>
+                        <h5>Phone number:</h5>
+                        <p th:text="${beautician.phoneNumber}"></p>
+                    </div>
+                </div>
+                <!--     Price list-->
+                <div class="tab-pane" id="price-list-tab-pane" data-toggle="tab" role="tabpanel"
+                     aria-labelledby="price-list-tab"
+                     tabindex="0">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Service name</th>
+                            <th scope="col">Price</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr scope="row" th:each="item, it : ${itemList}">
+                            <td th:text="${it.index + 1}"></td>
+                            <td th:text="${item.name}"></td>
+                            <td th:text="${item.price}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!--  Portfolio-->
+                <div class="tab-pane" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab"
+                     tabindex="0">
+                    <div class="row">
+                        <div class="column" th:each="photo: ${photoList}" th:value="${photo.id}">
+                            <img th:src="@{${'data:image/jpeg;base64,' + photo.getBase64Data()}}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function activatePriceListab() {
+        console.log("activating tab");
+        var triggerEl = document.querySelector('#price-list-tab')
+        var tab = new bootstrap.Tab(triggerEl);
+        tab.show();
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        activatePriceListab();
+    });
+</script>
+</body>
+
+</html>

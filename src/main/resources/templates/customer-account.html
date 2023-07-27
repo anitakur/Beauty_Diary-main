@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Account</title>
+    <head th:insert="~{fragments/links.html :: links}"></head>
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <link rel="stylesheet" href="/masterProfile.css">
+</head>
+<body>
+<!--<header th:insert="~{fragments/navbar.html :: nav}"></header>-->
+<header th:insert="~{fragments/navLoged.html :: navLoged}"></header>
+<div class="container">
+    <!-- Profile photo , full name-->
+    <div class="row">
+        <div class="col-4">
+            <div class="avatar">
+                <img id="avatar" th:src="@{${'/profilePictures/customers/' + customerId +'.jpg'}}"
+                     class="mx-auto d-block">
+                <button id="edit-img" type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">
+                    <i class='far fa-edit' style='font-size:24px'></i>
+                </button>
+                <!-- Modal for uploading profile img-->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Edit photo</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <!--     Upload form -->
+                                <form method="post" enctype="multipart/form-data"
+                                      th:action="@{/customer-account/{customerId}/uploadImage(customerId=${customerId})}">
+                                    <div class="row g-3 align-items-center">
+                                        <input type="file" name="imageFile" accept="image/*" class="form-control">
+                                    </div>
+                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                        <button id="add-img" type="submit" class="btn me-md-2">Add new photo</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Full Name section-->
+            <div>
+                <div class="text-center">
+                    <h3 th:text="${customer.fullName}"></h3>
+                    <p id="capture">Personal account</p>
+                </div>
+
+                <!-- Edit profile section-->
+                <div>
+                    <p>
+                        <a class="btn d-grid gap-2 col-6 mx-auto" data-bs-toggle="collapse"
+                           href="#collapseExample" role="button"
+                           aria-expanded="false" aria-controls="collapseExample">
+                            Edit profile
+                        </a>
+                    </p>
+                </div>
+
+                <!-- Collapse-->
+                <div class="collapse" id="collapseExample">
+                    <div class="card card-body">
+                        <form th:action="@{/customer-account/{customerId}/updateProfile(customerId=${customerId})}"
+                              th:object="${customer}" method="post">
+                            <div class="mb-3">
+                                <label class="form-label">Address</label>
+                                <input th:field="*{address}" type="text" name="address" class="form-control">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Phone number</label>
+                                <input th:field="*{phoneNumber}" type="text" name="phoneNumber" class="form-control">
+                            </div>
+                            <div>
+                                <button class="btn d-grid gap-2 col-6 mx-auto">Submit</button>
+                            </div>
+                            <input hidden="hidden" th:field="*{id}"/>
+                            <input hidden="hidden" th:field="*{email}"/>
+                            <input hidden="hidden" th:field="*{fullName}"/>
+                            <input hidden="hidden" th:field="*{password}"/>
+                            <input hidden="hidden" th:field="*{createdAt}"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Navigation tab-->
+        <div class="col-8">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="home-tab" data-bs-toggle="tab"
+                            data-bs-target="#home-tab-pane" type="button" role="tab"
+                            aria-controls="home-tab-pane">
+                        View Profile
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="reservation-tab" data-bs-toggle="tab"
+                            data-bs-target="#reservation-pane"
+                            type="button" role="tab" aria-controls="reservation-tab-pane" aria-selected="false">
+                        My reservations
+                    </button>
+            </ul>
+            <!-- Nav tab Content-->
+            <div class="tab-content fade show active" id="myTabContent">
+                <div class="tab-pane fade" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab"
+                     tabindex="0">
+                    <div>
+                        <h5>Address:</h5>
+                        <p th:text="${customer.address}"></p>
+                    </div>
+                    <div>
+                        <h5>Email Address:</h5>
+                        <p th:text="${customer.email}"></p>
+                    </div>
+                    <div>
+                        <h5>Phone number:</h5>
+                        <p th:text="${customer.phoneNumber}"></p>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="reservation-pane" data-toggle="tab" role="tabpanel"
+                     aria-labelledby="reservation-tab"
+                     tabindex="0">
+                    <table class="table">
+                        <thead class="thead">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Beauty Specialist</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Time</th>
+                            <th scope="col">Phone Number</th>
+                            <th scope="col">Address</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr scope="row" th:each="reservation,iterator: ${reservationList}">
+                            <td th:text="${iterator.index}+1"></td>
+                            <td th:text="${reservation.getBeautician().getFullName()}"></td>
+                            <td th:text="${reservation.date}"></td>
+                            <td th:text="${reservation.time}"></td>
+                            <td th:text="${reservation.phoneNumber}"></td>
+                            <td th:text="${reservation.getBeautician().getAddress()}"></td>
+                            <td>
+                                <a type="submit" class="btn-delete"
+                                   th:href="@{/customer-account/{customerId}/deleteReservation/{id}(id=${reservation.id},customerId=${reservation.customer.id})}">Delete</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
+
+<script>
+    function activateReservation() {
+        console.log("activating tab");
+        var triggerEl = document.querySelector('#reservation-tab')
+        var tab = new bootstrap.Tab(triggerEl);
+        tab.show();
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        activateReservation();
+    });
+</script>
+</body>
+</html>
